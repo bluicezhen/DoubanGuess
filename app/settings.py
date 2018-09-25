@@ -13,6 +13,7 @@ BOT_NAME = 'app'
 
 SPIDER_MODULES = ['app.spiders']
 NEWSPIDER_MODULE = 'app.spiders'
+REDIRECT_ENABLED = False
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -33,7 +34,7 @@ DOWNLOAD_DELAY = 3
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -52,9 +53,9 @@ DOWNLOAD_DELAY = 3
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'app.middlewares.AppDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   'app.middlewares.ProxyMiddleware': 1024,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
