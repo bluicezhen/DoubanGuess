@@ -5,7 +5,7 @@ douban_domain = "movie.douban.com"
 
 
 class QuotesSpider(scrapy.Spider):
-    name = "quotes"
+    name = "DOUBAN_SPIDER__________DOUBAN_SPIDER"
     allowed_domains = [douban_domain]
     start_urls = ["https://movie.douban.com/subject/6860160/"]
 
@@ -51,12 +51,12 @@ class QuotesSpider(scrapy.Spider):
         except ValueError:
             movie_rat = 0
 
-        print("标题：", movie_title)
-        print("编号：", movie_id)
-        print("网址：", movie_url)
-        print("评分：", movie_rat)
-        print("导演：", movie_directors)
-        print("编剧：", movie_writers)
-        print("主演：", movie_actors)
-        print("类型：", movie_type)
-        print("标签：", movie_tags, "\n\n")
+        # print("标题：", movie_title)
+        # print("编号：", movie_id)
+        # print("网址：", movie_url)
+        # print("评分：", movie_rat)
+        # print("导演：", movie_directors)
+        # print("编剧：", movie_writers)
+        # print("主演：", movie_actors)
+        # print("类型：", movie_type)
+        # print("标签：", movie_tags, "\n\n")
