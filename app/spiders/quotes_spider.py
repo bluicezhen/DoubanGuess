@@ -1,5 +1,6 @@
 import scrapy
 import re
+from app.items import MovieItem
 
 douban_domain = "movie.douban.com"
 
@@ -11,7 +12,7 @@ class QuotesSpider(scrapy.Spider):
 
     def parse(self, response):
         if re.match("^https://movie.douban.com/subject/[0-9]+/?$", response.url):
-            self.decode_movie_page(response)
+            yield self.decode_movie_page(response)
 
         links = response.xpath("//a")
         for link in links:
@@ -37,13 +38,13 @@ class QuotesSpider(scrapy.Spider):
     @staticmethod
     def decode_movie_page(response):
         # Found a Movie
-        movie_id = response.url.split("https://movie.douban.com/subject/")[1].split("/")[0]
+        movie_uid = response.url.split("https://movie.douban.com/subject/")[1].split("/")[0]
         movie_title = response.xpath("//title/text()").get("data").replace(" ", "").replace("\n", "").split("(")[0]
         movie_url = response.url
         movie_directors = [i.root for i in response.xpath("//div[@id='info'][1]/span[1]//a/text()")]
         movie_writers = [i.root for i in response.xpath("//div[@id='info'][1]/span[2]//a/text()")]
         movie_actors = [i.root for i in response.xpath("//div[@id='info'][1]/span[3]//a/text()")]
-        movie_type = [i.root for i in response.xpath("//div[@id='info'][1]/span[@property='v:genre']/text()")]
+        movie_types = [i.root for i in response.xpath("//div[@id='info'][1]/span[@property='v:genre']/text()")]
         movie_tags = [i.root for i in response.xpath("//div[@class='tags-body']/a/text()")]
         try:
             movie_rat = int(response.xpath("//strong[@class='ll rating_num'][1]/text()").get("data")
@@ -51,12 +52,14 @@ class QuotesSpider(scrapy.Spider):
         except ValueError:
             movie_rat = 0
 
-        # print("标题：", movie_title)
-        # print("编号：", movie_id)
-        # print("网址：", movie_url)
-        # print("评分：", movie_rat)
-        # print("导演：", movie_directors)
-        # print("编剧：", movie_writers)
-        # print("主演：", movie_actors)
-        # print("类型：", movie_type)
-        # print("标签：", movie_tags, "\n\n")
+        movie_item = MovieItem(uid=movie_uid,
+                               title=movie_title,
+                               url=movie_url,
+                               directors=movie_directors,
+                               writers=movie_writers,
+                               actors=movie_actors,
+                               types=movie_types,
+                               tags=movie_tags,
+                               rat=movie_rat)
+
+        return movie_item

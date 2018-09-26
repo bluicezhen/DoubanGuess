@@ -9,5 +9,11 @@ import scrapy
 
 
 class MovieItem(scrapy.Item):
-    id = None
-    title = None
+    uid = scrapy.Field()
+    title = scrapy.Field()
+    url = scrapy.Field()
+    directors = scrapy.Field()
+    writers = scrapy.Field()
+    actors = scrapy.Field()
+    types = scrapy.Field()
+    tags = scrapy.Field()
