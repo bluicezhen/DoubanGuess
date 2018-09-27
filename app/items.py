@@ -12,6 +12,7 @@ class MovieItem(scrapy.Item):
     uid = scrapy.Field()
     title = scrapy.Field()
     url = scrapy.Field()
+    rat = scrapy.Field()
     directors = scrapy.Field()
     writers = scrapy.Field()
     actors = scrapy.Field()
